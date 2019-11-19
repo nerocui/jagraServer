@@ -20,11 +20,13 @@ namespace server.data
             modelBuilder.Entity<Task>()
                 .HasOne(t => t.Creator)
                 .WithMany(u => u.CreatedTasks)
-                .HasForeignKey(t => t.CreatorId);
+                .HasForeignKey(t => t.CreatorId)
+                .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Task>()
                 .HasOne(t => t.Assignee)
                 .WithMany(u => u.AssignedTasks)
-                .HasForeignKey(t => t.AssigneeId);
+                .HasForeignKey(t => t.AssigneeId)
+                .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<TaskWatch>()
                 .HasKey(tw => new {tw.UserId, tw.TaskId});
             modelBuilder.Entity<TaskWatch>()
@@ -40,11 +42,13 @@ namespace server.data
             modelBuilder.Entity<TaskDependency>()
                 .HasOne(td => td.Dependee)
                 .WithMany(t => t.Dependees)
-                .HasForeignKey(td => td.DependeeId);
+                .HasForeignKey(td => td.DependeeId)
+                .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<TaskDependency>()
                 .HasOne(td => td.Depender)
                 .WithMany(t => t.Dependers)
-                .HasForeignKey(td => td.DependerId);
+                .HasForeignKey(td => td.DependerId)
+                .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<CommentReply>()
                 .HasKey(cr => new {cr.ReplyId, cr.ReplyToId});
             modelBuilder.Entity<CommentReply>()
@@ -53,7 +57,8 @@ namespace server.data
             modelBuilder.Entity<CommentReply>()
                 .HasOne(cr => cr.Reply)
                 .WithMany(c => c.Replies)
-                .HasForeignKey(cr => cr.ReplyId);
+                .HasForeignKey(cr => cr.ReplyId)
+                .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Comment>()
                 .HasOne(c => c.ReplyTo)
                 .WithOne(cr => cr.ReplyTo)
@@ -63,21 +68,25 @@ namespace server.data
             modelBuilder.Entity<OrganizationUser>()
                 .HasOne(ou => ou.User)
                 .WithMany(u => u.Organizations)
-                .HasForeignKey(ou => ou.UserId);
+                .HasForeignKey(ou => ou.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<OrganizationUser>()
                 .HasOne(ou => ou.Organization)
                 .WithMany(o => o.Users)
-                .HasForeignKey(ou => ou.OrganizationId);
+                .HasForeignKey(ou => ou.OrganizationId)
+                .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Invitation>()
                 .HasKey(i => new {i.UserId, i.OrganizationId});
             modelBuilder.Entity<Invitation>()
                 .HasOne(i => i.User)
                 .WithMany(u => u.Invitations)
-                .HasForeignKey(i => i.UserId);
+                .HasForeignKey(i => i.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Invitation>()
                 .HasOne(i => i.Organization)
                 .WithMany(o => o.Invitations)
-                .HasForeignKey(i => i.OrganizationId);
+                .HasForeignKey(i => i.OrganizationId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

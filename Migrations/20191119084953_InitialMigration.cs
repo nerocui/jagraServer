@@ -12,7 +12,7 @@ namespace server.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
                     Color = table.Column<string>(nullable: true)
                 },
@@ -26,7 +26,7 @@ namespace server.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Username = table.Column<string>(nullable: true),
                     PasswordHash = table.Column<byte[]>(nullable: true),
                     PasswordSalt = table.Column<byte[]>(nullable: true),
@@ -78,14 +78,12 @@ namespace server.Migrations
                         name: "FK_OrganizationUsers_Organizations_OrganizationId",
                         column: x => x.OrganizationId,
                         principalTable: "Organizations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_OrganizationUsers_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -93,7 +91,7 @@ namespace server.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     CreatorId = table.Column<int>(nullable: false),
@@ -109,14 +107,12 @@ namespace server.Migrations
                         name: "FK_Tasks_Users_AssigneeId",
                         column: x => x.AssigneeId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Tasks_Users_CreatorId",
                         column: x => x.CreatorId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Tasks_Organizations_OrganizationId",
                         column: x => x.OrganizationId,
@@ -130,7 +126,7 @@ namespace server.Migrations
                 columns: table => new
                 {
                     CommentId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     TaskId = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
                     content = table.Column<string>(nullable: true)
@@ -166,14 +162,12 @@ namespace server.Migrations
                         name: "FK_TaskDependencies_Tasks_DependeeId",
                         column: x => x.DependeeId,
                         principalTable: "Tasks",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_TaskDependencies_Tasks_DependerId",
                         column: x => x.DependerId,
                         principalTable: "Tasks",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -214,8 +208,7 @@ namespace server.Migrations
                         name: "FK_CommentReplies_Comments_ReplyId",
                         column: x => x.ReplyId,
                         principalTable: "Comments",
-                        principalColumn: "CommentId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "CommentId");
                     table.ForeignKey(
                         name: "FK_CommentReplies_Comments_ReplyToId",
                         column: x => x.ReplyToId,
